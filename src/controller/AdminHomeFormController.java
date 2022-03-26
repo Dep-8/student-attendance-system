@@ -118,8 +118,20 @@ public class AdminHomeFormController {
     }
 
     
-    public void btnUserProfile_OnAction(ActionEvent event) {
+    public void btnUserProfile_OnAction(ActionEvent event) throws IOException {
+        AnchorPane root = FXMLLoader.load(this.getClass().getResource("/view/UserProfileForm.fxml"));
+        Scene attendanceScene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Student Attendance System: Record Attendance");
+        stage.setScene(attendanceScene);
+        stage.setResizable(false);
+        stage.initOwner(btnRecordAttendance.getScene().getWindow());
+        stage.show();
 
+        Platform.runLater(()->{
+            stage.sizeToScene();
+            stage.centerOnScreen();
+        });
     }
 
     

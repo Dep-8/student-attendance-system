@@ -26,7 +26,7 @@ public class BackupAndRestoreFormController {
                     "-h", "localhost",
                     "--port", "3306",
                     "-u", "root",
-                    "-pmysql",
+                    "-p12345678",
                     "--add-drop-database",
                     "--databases", "dep8_student_attendance");
 
@@ -49,5 +49,39 @@ public class BackupAndRestoreFormController {
     }
 
     public void btnRestore_OnAction(ActionEvent actionEvent) {
+        FileChooser fileChooser= new FileChooser();
+        fileChooser.setTitle("Select Backup File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Backup files (*.dep8bak)", "*.dep8bak"));
+        File file = fileChooser.showOpenDialog(btnBackup.getScene().getWindow());
+
+        if(file!=null){
+            ProcessBuilder mysqlDumpProcessBuilder = new ProcessBuilder("mysql",
+                    "-h", "localhost",
+                    "--port", "3306",
+                    "-u", "root",
+                    "-p12345678"
+                    );
+            mysqlDumpProcessBuilder.redirectInput(file);
+
+            try {
+                Process mysqlRestore = mysqlDumpProcessBuilder.start();
+                int exitCode = mysqlRestore.waitFor();
+                if (exitCode == 0) {
+                    new DepAlert(Alert.AlertType.INFORMATION, "Restore process succeeded",
+                            "Success", ButtonType.OK).show();
+                } else {
+                    new DepAlert(Alert.AlertType.ERROR, "Restore process failed, try again!",
+                            "Backup failed", "Error", ButtonType.OK).show();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
     }
 }

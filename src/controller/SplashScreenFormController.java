@@ -35,7 +35,7 @@ public class SplashScreenFormController {
             try {
                 sleep(100);
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dep8_student_attendance", "root", "mysql");
+                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dep8_student_attendance", "root", "12345678");
 
                 Platform.runLater(() -> lblStatus.setText("Setting up the UI.."));
                 sleep(100);
@@ -94,7 +94,7 @@ public class SplashScreenFormController {
                         sleep(100);
 
                         Connection connection = DriverManager.
-                                getConnection("jdbc:mysql://localhost:3306?allowMultiQueries=true", "root", "mysql");
+                                getConnection("jdbc:mysql://localhost:3306?allowMultiQueries=true", "root", "12345678");
                         Platform.runLater(() -> lblStatus.setText("Execute database script.."));
                         Statement stm = connection.createStatement();
                         stm.execute(script);
@@ -102,7 +102,7 @@ public class SplashScreenFormController {
                         sleep(100);
 
                         Platform.runLater(() -> lblStatus.setText("Obtaining a new DB Connection.."));
-                        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dep8_student_attendance", "root", "mysql");
+                        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dep8_student_attendance", "root", "12345678");
                         sleep(100);
 
                         /* Storing the database connection as a singleton instance */
@@ -177,7 +177,7 @@ public class SplashScreenFormController {
 
     private void dropDatabase(){
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root", "mysql");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306", "root", "12345678");
             Statement stm = connection.createStatement();
             stm.execute("DROP DATABASE IF EXISTS dep8_student_attendance");
             connection.close();
